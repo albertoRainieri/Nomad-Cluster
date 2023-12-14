@@ -26,7 +26,7 @@ $ vagrant up
 
 ## UI Visualization
 
-Go to <ip-address-nomad-master>:4646/ui/jobs
+Go to \<ip-address-nomad-master\>:4646/ui/jobs
 
 ## Launch Test Job
 
