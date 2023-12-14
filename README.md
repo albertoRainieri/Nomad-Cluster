@@ -36,3 +36,6 @@ from your host:
 $ vagrant ssh nmaster
 $ nomad job run /vagrant/jobs/busybox.hcl
 ```
+
+## Note
+in config/nomad_client_config.sh, the "cpu_total_compute" in the client section has been set manually because Nomad was failing to detect dynamically the cpu. Delete this line in case you do not have this problem or change it if you set a different number of cpu processors on the client node.
