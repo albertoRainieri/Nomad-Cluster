@@ -17,7 +17,9 @@ Vagrant.configure(2) do |config|
       v.memory  = 2048
       v.cpus    =  2
     end
-    node.vm.provision "shell", path: "config/consul_bootstrap.sh",
+
+    node.vm.provision "shell", path: "config/consul_bootstrap.sh"
+    
   end
 
   # Nomad Master Server
@@ -62,8 +64,8 @@ Vagrant.configure(2) do |config|
 
       node.vm.provision "shell", path: "config/nomad_bootstrap.sh", args: "192.168.217.10#{i}"
       node.vm.provision "shell", path: "config/nomad_client_config.sh"
-
     end
+
   end
 
 end
