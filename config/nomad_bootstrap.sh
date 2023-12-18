@@ -1,9 +1,13 @@
 #!/bin/bash
 
+# get vars
+node_ip_address=$1
+i=${node_ip_address: -1}
+
 echo "[TASK 1] Update & Install Basic packages"
-apt update >/dev/null 2>&1
-apt upgrade -y >/dev/null 2>&1
-apt install -y wget vim net-tools gcc make tar git unzip sysstat tree >/dev/null 2>&1
+sudo apt update >/dev/null 2>&1
+sudo apt upgrade -y >/dev/null 2>&1
+sudo apt install -y wget vim net-tools gcc make tar git unzip sysstat tree >/dev/null 2>&1
 
 echo "[TASK 2] Install Nomad Binary"
 wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg >/dev/null 2>&1
@@ -15,6 +19,7 @@ sudo sh -c "cat >> /etc/hosts" <<-EOF
 192.168.217.100 nmaster.example.com nmaster
 192.168.217.101 nclient1.example.com nclient1
 192.168.217.102 nclient2.example.com nclient2
+192.168.217.103 consul.example.com consul
 EOF
 
 #Install Docker
@@ -37,3 +42,13 @@ echo "give permission to USER for docker"
 sudo groupadd -f docker
 sudo usermod -aG docker $USER
 newgrp docker
+
+echo "[TASK 6] Docker Pull Consul Image and Start Consul Client"
+docker pull arm64v8/consul
+docker tag arm64v8/consul consul
+
+echo "start Consul Client"
+docker run -d \
+   --name=consul \
+   --network=host \
+   consul agent -node=client-"$i" -retry-join=192.168.217.103 -bind="$node_ip_address"

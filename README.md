@@ -1,7 +1,7 @@
 
-# Nomad Cluster with Vagrant on ARM Host
+# Nomad Cluster & Consul
 
-Nomad Cluster with one master and two clients, on ARM hosts.
+Nomad Cluster with one master and two clients, deployed on ARM hosts with vagrant.
 
 
 ## Requirements
