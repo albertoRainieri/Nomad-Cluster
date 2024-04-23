@@ -6,7 +6,7 @@ i=${node_ip_address: -1}
 
 echo "[TASK 1] Update & Install Basic packages"
 sudo apt update >/dev/null 2>&1
-sudo apt upgrade -y >/dev/null 2>&1
+#sudo apt upgrade -y >/dev/null 2>&1
 sudo apt install -y wget vim net-tools gcc make tar git unzip sysstat tree >/dev/null 2>&1
 
 echo "[TASK 2] Install Nomad Binary"
@@ -47,8 +47,14 @@ echo "[TASK 6] Docker Pull Consul Image and Start Consul Client"
 docker pull arm64v8/consul
 docker tag arm64v8/consul consul
 
+if docker ps -a --format '{{.Names}}' | grep -i consul; then
+    # Container exists, so delete it
+    docker rm -f consul
+    echo "Restarting Consul"
+fi
+
 echo "start Consul Client"
-docker run -d \
+docker run -d --rm -it \
    --name=consul \
    --network=host \
    consul agent -node=client-"$i" -retry-join=192.168.217.103 -bind="$node_ip_address"
