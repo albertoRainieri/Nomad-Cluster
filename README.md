@@ -14,10 +14,12 @@ You can find different projects (working in progress):
 
 ## Requirements
 
-Install Vagrant and VMware Fusion as per this guide:
+1. Install Vagrant and VMware Fusion as per this guide:
+```
 https://sloopstash.com/blog/how-to-build-vm-on-apple-m1-m2-chip-mac-with-vmware-fusion-and-vagrant.html
+```
 
-Install Ansible
+2. Install Ansible
 ```
 brew install ansible
 ```
@@ -54,8 +56,10 @@ $ vagrant up
 Regarding the Nomad-Consul-Haproxy project,
 Haproxy runs on the "consul" node, therefore if you set up properly your /etc/hosts file, you can reach the following websites:
 
+```
 Nomad: nomad.example.com
 Consul: consul.example.com
-HTTPD page: httpd.example.com
+Httpd page: httpd.example.com
+```
 
 ## Note
