@@ -1,0 +1,24 @@
+- name: Run HAProxy container
+  hosts: consul
+  become: yes
+  vars:
+    root_directory: /Users/albertorainieri/Learning/Nomad/config/haproxy
+  tasks:
+    - name: Create HAProxy configuration directory
+      file:
+        path: /etc/haproxy
+        state: directory
+    - name: Create HAProxy configuration file
+      template:
+        src: "{{ root_directory }}/haproxy.cfg"  # Replace with your HAProxy configuration template
+        dest: /etc/haproxy/haproxy.cfg
+    - name: Ensure HAProxy container is running
+      community.docker.docker_container:
+        name: haproxy
+        image: haproxy:latest
+        state: started
+        user: root
+        detach: true
+        network_mode: host
+        volumes:
+          - "/etc/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"

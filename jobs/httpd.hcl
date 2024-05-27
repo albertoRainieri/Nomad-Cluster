@@ -7,7 +7,7 @@ job "httpd-job" {
 
     network {
       port "http" {
-        static = 80
+        to = "80"
       }
     }
 
@@ -16,13 +16,13 @@ job "httpd-job" {
       # labelled "http". Since Nomad allocates high dynamic port
       # numbers, we use labels to refer to them.
       port = "http"
+      tags = ["web"]
 
-      check {
-        type     = "http"
-        path     = "/health"
-        interval = "10s"
-        timeout  = "2s"
-      }
+        check {
+          type     = "tcp"
+          interval = "10s"
+          timeout  = "2s"
+        }
     }
 
     task "httpd" {

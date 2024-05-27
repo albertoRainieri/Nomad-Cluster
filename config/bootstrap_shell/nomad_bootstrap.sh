@@ -53,8 +53,11 @@ if docker ps -a --format '{{.Names}}' | grep -i consul; then
     echo "Restarting Consul"
 fi
 
-echo "start Consul Client"
-docker run -d --rm -it \
-   --name=consul \
-   --network=host \
-   consul agent -node=client-"$i" -retry-join=192.168.217.103 -bind="$node_ip_address"
+# echo "start Consul Client"
+# docker run -d --rm -it \
+#    --name=consul \
+#    --network=host \
+#    consul agent -node=client-"$i" -retry-join=192.168.217.103 -bind="$node_ip_address"
+
+
+#docker run -d --rm -it  --name=consul  --network=host  consul agent -node=client-1 -retry-join=192.168.217.103 -bind="192.168.217.101"

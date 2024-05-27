@@ -1,5 +1,4 @@
 #!/bin/sh
-consul_address=$1
 echo "[TASK 1] Update & Install Docker packages and some basic packages"
 sudo sed -i "s/#\$nrconf{kernelhints} = -1;/\$nrconf{kernelhints} = -1;/g" /etc/needrestart/needrestart.conf
 sudo apt-get update
@@ -32,8 +31,3 @@ if docker ps -a --format '{{.Names}}' | grep -i consul; then
     docker rm -f consul
     echo "Restarting Consul"
 fi
-
-docker run -d --rm -it \
-    --network=host \
-    --name=consul \
-    consul agent -server -ui -node=server-1 -bootstrap-expect=1 -client=0.0.0.0 -bind="$consul_address"
