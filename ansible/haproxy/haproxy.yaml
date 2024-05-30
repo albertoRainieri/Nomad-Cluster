@@ -22,3 +22,4 @@
         network_mode: host
         volumes:
           - "/etc/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
+    

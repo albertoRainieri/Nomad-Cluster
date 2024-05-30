@@ -14,7 +14,7 @@ server_hostname_2 = "nmaster"
 
 server_ip_3 = "192.168.217.10"
 server_hostname_3 = "nclient"
-number_of_nomad_clients = 1
+number_of_nomad_clients = 2
 
 
 Vagrant.configure(2) do |config|
@@ -32,8 +32,8 @@ Vagrant.configure(2) do |config|
       
     node.vm.provider "vmware_fusion" do |v|
       v.gui     = false
-      v.memory  = 2048
-      v.cpus    =  2
+      v.memory  = 1024
+      v.cpus    =  1
     end
 
     node.vm.provision "shell", path: "../config/bootstrap_shell/consul_bootstrap.sh"
@@ -62,12 +62,12 @@ Vagrant.configure(2) do |config|
 
     node.vm.provider "vmware_fusion" do |v|
       v.gui     = false
-      v.memory  = 2048
-      v.cpus    =  2
+      v.memory  = 1024
+      v.cpus    =  1
     end
     
     node.vm.provision "shell", path: "../config/bootstrap_shell/nomad_bootstrap.sh", args: server_ip_2
-    node.vm.provision "shell", path: "../config/bootstrap_shell/nomad_master_config.sh"
+    node.vm.provision "shell", path: "../config/bootstrap_shell/nomad_master_config.sh", args: server_ip_2
 
     node.vm.provision "ansible" do |ansible|
       ansible.playbook = "../ansible/consul/consul_client.yaml"
@@ -92,7 +92,7 @@ Vagrant.configure(2) do |config|
 
       node.vm.provider "vmware_fusion" do |v|
         v.gui     = false
-        v.memory  = 2048
+        v.memory  = 2560
         v.cpus    = 2
       end
 
@@ -102,7 +102,7 @@ Vagrant.configure(2) do |config|
         s.path = "../config/bootstrap_shell/nomad_bootstrap.sh"
         s.args = [ server_ip_3 + "#{i}"]
       end
-      node.vm.provision "shell", path: "../config/bootstrap_shell/nomad_client_config.sh"
+      
 
       node.vm.provision "ansible" do |ansible|
         ansible.playbook = "../ansible/consul/consul_client.yaml"
@@ -110,6 +110,11 @@ Vagrant.configure(2) do |config|
         ansible.extra_vars = {
           consul_bind_address: server_ip_1
         }
+      end
+
+      node.vm.provision "ansible" do |ansible|
+        ansible.playbook = "../ansible/nomad/nomad_client.yaml"
+        ansible.groups = {"nomad_client" => [server_hostname_3 + "#{i}"]}
       end
     end
 
