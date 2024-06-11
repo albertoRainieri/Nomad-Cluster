@@ -12,6 +12,8 @@
       template:
         src: "{{ root_directory }}/haproxy.cfg"  # Replace with your HAProxy configuration template
         dest: /etc/haproxy/haproxy.cfg
+      notify:
+        - Restart HAProxy container
     - name: Ensure HAProxy container is running
       community.docker.docker_container:
         name: haproxy
@@ -22,4 +24,10 @@
         network_mode: host
         volumes:
           - "/etc/haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg"
-    
+          
+  handlers:
+    - name: Restart HAProxy container
+      docker_container:
+        name: haproxy
+        state: started
+        recreate: yes

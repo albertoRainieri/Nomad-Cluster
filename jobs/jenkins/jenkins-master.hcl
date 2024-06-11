@@ -20,12 +20,15 @@ job "jenkins-master" {
       }
     }
 
+
+
     service {
       # This tells Consul to monitor the service on the port
       # labelled "http". Since Nomad allocates high dynamic port
       # numbers, we use labels to refer to them.
       port = "http"
-      tags = ["jenkins-master"]
+      tags = ["web"]
+      name = "jenkins-master"
 
         check {
           type     = "tcp"
@@ -34,22 +37,22 @@ job "jenkins-master" {
         }
     }
 
-    service {
-      # This tells Consul to monitor the service on the port
-      # labelled "http". Since Nomad allocates high dynamic port
-      # numbers, we use labels to refer to them.
-      port = "jnlp"
-      tags = ["jenkins-master-jnlp"]
+    // service {
+    //   # This tells Consul to monitor the service on the port
+    //   # labelled "http". Since Nomad allocates high dynamic port
+    //   # numbers, we use labels to refer to them.
+    //   port = "jnlp"
+    //   tags = ["jnlp"]
 
-        check {
-          type     = "tcp"
-          interval = "10s"
-          timeout  = "2s"
-        }
-    }
+    //     check {
+    //       type     = "tcp"
+    //       interval = "10s"
+    //       timeout  = "2s"
+    //     }
+    // }
 
     task "jenkins-master" {
-      driver = "consul"
+      driver = "docker"
 
       config {
         image = var.image
@@ -58,7 +61,7 @@ job "jenkins-master" {
 
       resources {
         cpu    = 500  # CPU resources in MHz
-        memory = 256  # Memory resources in MB
+        memory = 1024  # Memory resources in MB
       }
     }
   }
