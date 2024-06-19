@@ -2,9 +2,8 @@
 - name: Run Consul container
   hosts: consul
   become: yes
-  vars:
-    - consul_bind_address: "{{ bind_address | default('192.168.217.103') }}"
   tasks:
+    - include_vars: ../../../host_vars/main.yml 
     - name: Ensure Consul container is running
       community.docker.docker_container:
         name: consul

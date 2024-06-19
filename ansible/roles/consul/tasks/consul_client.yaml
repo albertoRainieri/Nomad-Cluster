@@ -2,10 +2,11 @@
 - name: Run Consul container
   hosts: consul_client
   become: yes
-  vars:
-    - consul_bind_address: "{{ bind_address | default('192.168.217.103') }}"
-    - consul_bind_last_octet: "{{ ansible_default_ipv4.address.split('.')[-1] }}"
+  vars: 
+      - consul_bind_last_octet: "{{ ansible_default_ipv4.address.split('.')[-1] }}"
   tasks:
+    - include_vars: ../../../host_vars/main.yml 
+
     - name: Ensure Consul container is running
       community.docker.docker_container:
         name: consul

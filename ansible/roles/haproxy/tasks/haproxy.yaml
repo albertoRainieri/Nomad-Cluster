@@ -2,7 +2,7 @@
   hosts: consul
   become: yes
   vars:
-    root_directory: /Users/albertorainieri/Learning/Nomad/config/haproxy
+    template_folder: ../templates
   tasks:
     - name: Create HAProxy configuration directory
       file:
@@ -10,7 +10,7 @@
         state: directory
     - name: Create HAProxy configuration file
       template:
-        src: "{{ root_directory }}/haproxy.cfg"  # Replace with your HAProxy configuration template
+        src: "{{ template_folder }}/haproxy.cfg"  # Replace with your HAProxy configuration template
         dest: /etc/haproxy/haproxy.cfg
       notify:
         - Restart HAProxy container

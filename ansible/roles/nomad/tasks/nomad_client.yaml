@@ -1,10 +1,20 @@
 ---
 - name: Provision Nomad Client
-  hosts: nomad_client
+  hosts: nclient1
   vars:
     consul_endpoint: "http://consul.example.com"
     nomad_service: "nomad"
   tasks:
+    - name: create Volume Directory for Jenkins
+      #remote_user: vagrant
+      #become: true
+      file:
+        path: /vagrant/volumes/jenkins
+        state: directory
+        recurse: true 
+        mode: 0700
+
+
     - name: Query Consul for Nomad master IP
       uri:
         url: "{{ consul_endpoint }}/v1/catalog/service/{{ nomad_service }}"
@@ -20,7 +30,7 @@
     - name: Configure Nomad client
       become: true
       template:
-        src: ../../template/nomad_client.hcl.j2
+        src: ../templates/nomad_client.hcl.j2
         dest: /etc/nomad.d/nomad.hcl
       vars:
         nomad_master_ip: "{{ nomad_master_ip }}"
