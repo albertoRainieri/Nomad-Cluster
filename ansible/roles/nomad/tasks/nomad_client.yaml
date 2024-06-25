@@ -5,16 +5,6 @@
     consul_endpoint: "http://consul.example.com"
     nomad_service: "nomad"
   tasks:
-    - name: create Volume Directory for Jenkins
-      #remote_user: vagrant
-      #become: true
-      file:
-        path: /vagrant/volumes/jenkins
-        state: directory
-        recurse: true 
-        mode: 0700
-
-
     - name: Query Consul for Nomad master IP
       uri:
         url: "{{ consul_endpoint }}/v1/catalog/service/{{ nomad_service }}"

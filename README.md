@@ -1,15 +1,13 @@
 
 # Devops Overview
 
-This repository contain different Devops project to build in local environment.
+This repository is able to build a Nomad Cluster in localhost.
 These environments are built through the use of Vagrant and Ansible:
-I'm using a Mac OS M2, so everything is set up to work on ARM architecture.
+This setup is for Mac OS M2, so everything is set up to work on ARM architecture.
 
 You can find different projects (working in progress):
 
-1) Nomad Cluster with Consul And Haproxy (completed)
-2) Monitoring (to create)
-3) CI-CD (to create)
+1) Nomad Cluster with Consul And Haproxy
 
 
 ## Requirements
@@ -32,14 +30,6 @@ First of all, copy file hosts in ansible directory
 $ cp provisioning/hosts /etc/ansible/hosts
 ```
 
-Select the preferred Vagrantfile from provisioning/vagrant_dir:
-```
-$ cp provisioning/vagrant_dir/<Vagrantfile> /provisioning/Vagrantfile
-$ cd provisioning
-$ vagrant up
-```
-
-
 Modify the Vagrantfile according to your needs (ip address, hostname, cpu, memory).
 
 
@@ -48,6 +38,7 @@ Modify the Vagrantfile according to your needs (ip address, hostname, cpu, memor
 Launch Nomad cluster through vagrant cli:
 
 ```
+$ cd provisioning
 $ vagrant up
 ```
 

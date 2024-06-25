@@ -4,8 +4,4 @@ client {
     enabled = true
     servers = [ "{{ nomad_master_ip }}" ]
     cpu_total_compute = 4000
-    host_volume "jenkins_home" {
-        path      = "/vagrant/volumes/jenkins"
-        read_only = false
-  }
 }
