@@ -25,12 +25,13 @@ brew install ansible
 
 ## Configuration
 
-First of all, copy file hosts in ansible directory
+1) Modify the Vagrantfile according to your needs (ip address, hostname, cpu, memory).
+
+2) change hosts file accordingly and copy file hosts in ansible directory
 ```
+$ vim provisioning/hosts
 $ cp provisioning/hosts /etc/ansible/hosts
 ```
-
-Modify the Vagrantfile according to your needs (ip address, hostname, cpu, memory).
 
 
 ## Installation
